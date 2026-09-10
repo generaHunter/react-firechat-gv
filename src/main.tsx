@@ -9,6 +9,8 @@ import FirebaseService from "./config/FirebaseService.tsx";
 
 import { BrowserRouter } from "react-router";
 
+
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>

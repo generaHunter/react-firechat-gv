@@ -10,6 +10,7 @@ import ChatPage from "./pages/admin/ChatPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import NotFoundPage from "./pages/public/NotFoundPage";
+import TasksPage from "./pages/admin/TasksPage";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route index element={<DashboardPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="chat" element={<ChatPage />} />
+          <Route path="tasks" element={<TasksPage />} />
         </Route>
 
         <Route path="auth" element={<AuthLayout />}>
