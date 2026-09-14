@@ -17,10 +17,12 @@ export const useTaskActions = () => {
 
   const tasksQuery = query(taskCollectionRef, where("userId", "==", user!.uid));
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { status, data: tasks } = useFirestoreCollectionData(tasksQuery, {
     idField: "id",
     suspense: true,
   });
+  
 
   const createTask = async (data: { title: string; description?: string }) => {
     return await addDoc(taskCollectionRef, {

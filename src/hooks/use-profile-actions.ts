@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUser } from "reactfire";
 import { updateProfile } from "firebase/auth";
+import { useUserActions } from "./use-user-actions";
 
 export interface IResultUpdateProfile {
   success: boolean;
@@ -8,6 +9,9 @@ export interface IResultUpdateProfile {
 
 export const useProfileAtions = () => {
   const [loading, setLoading] = useState(false);
+
+   const { createOrUpdateUser } = useUserActions();
+   
   const { data: user } = useUser();
 
   const updateUserProfile = async (data: {
@@ -25,6 +29,11 @@ export const useProfileAtions = () => {
         displayName: data.displayName || user.displayName,
         photoURL: data.photoUrl || user.photoURL,
       });
+
+      await createOrUpdateUser({
+        ...user,
+        ...data
+      })
 
       return {
         success: true,

@@ -9,6 +9,7 @@ import {
 import type { AuthError } from "firebase/auth";
 import { useState } from "react";
 import { useAuth } from "reactfire";
+import { useUserActions } from "./use-user-actions";
 
 interface AuthActionRespose {
   success: boolean;
@@ -18,6 +19,8 @@ interface AuthActionRespose {
 export const useAuthActions = () => {
   const [loading, setLoading] = useState(false);
   const auth = useAuth();
+
+  const { createOrUpdateUser } = useUserActions();
 
   const login = async (data: {
     email: string;
@@ -59,6 +62,8 @@ export const useAuthActions = () => {
           displayName: data.displayName,
         });
 
+        await createOrUpdateUser(currentUser.user);
+
         //Forzar la recarfa del usuario para sincronizar con ReactFire
         await currentUser.user.reload();
       }
@@ -82,38 +87,41 @@ export const useAuthActions = () => {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const data = await signInWithPopup(auth, provider);
+      
+      await createOrUpdateUser(data.user);
+
       return {
         success: true,
-        error: null
-      }
+        error: null,
+      };
     } catch (error) {
-        const authError = error as AuthError;
-        return {
-            success: false,
-            error: authError
-        }
+      const authError = error as AuthError;
+      return {
+        success: false,
+        error: authError,
+      };
     } finally {
       setLoading(false);
     }
   };
 
-  const logout = async () : Promise<void> => {
+  const logout = async (): Promise<void> => {
     setLoading(true);
     try {
-       await signOut(auth);
+      await signOut(auth);
     } catch (error) {
-        console.error("Error during logout: ", error);
-    }finally {
-        setLoading(false); 
+      console.error("Error during logout: ", error);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return {
     loading,
     login,
     register,
     loginWithGoogle,
-    logout
+    logout,
   };
 };
