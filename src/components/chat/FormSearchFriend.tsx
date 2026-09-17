@@ -46,21 +46,20 @@ const FormSearchFriend = ({ handleClickRoomId }: Props) => {
 
   return (
     <div>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-1">
         <FieldGroup>
           <Controller
             name="email"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel>Email</FieldLabel>
+                <FieldLabel className="sr-only">Email</FieldLabel>
                 <Input
                   {...field}
-                  id="i-title"
                   type="text"
                   aria-invalid={fieldState.invalid}
-                  placeholder="email@email.com"
-                  autoComplete="false"
+                  placeholder="Buscar por email..."
+                  autoComplete="off"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -69,11 +68,17 @@ const FormSearchFriend = ({ handleClickRoomId }: Props) => {
             )}
           />
         </FieldGroup>
-        <Button className="w-full mt-5" type="submit" disabled={isPending}>
-          {isPending ? "Searching..." : "Search"}
+        <Button
+          className="w-full mt-2"
+          size="sm"
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending ? "Buscando..." : "Buscar"}
         </Button>
       </form>
     </div>
   );
 };
+
 export default FormSearchFriend;

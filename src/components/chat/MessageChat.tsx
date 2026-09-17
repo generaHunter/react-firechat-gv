@@ -16,21 +16,31 @@ const MessageChat = ({ message }: Props) => {
   return (
     <div
       className={cn(
-        "max-w-37.5 p-2 rounded",
-        isFriend ? "bg-pink-200" : "bg-green-200 ml-auto",
+        "flex flex-col gap-1",
+        isFriend ? "items-start" : "items-end",
       )}
     >
-      <p>{message.text}</p>
-      <p className="truncate text-xs">
+      <div
+        className={cn(
+          "max-w-[75%] rounded-2xl px-3.5 py-2 text-sm shadow-sm",
+          isFriend
+            ? "rounded-bl-sm bg-muted text-foreground"
+            : "rounded-br-sm bg-primary text-primary-foreground",
+        )}
+      >
+        <p className="whitespace-pre-wrap break-words">{message.text}</p>
+      </div>
+      <p className="px-1 text-[11px] text-muted-foreground">
         {isFriend ? (
-          <Suspense fallback="cargando user info..">
+          <Suspense fallback="cargando...">
             <FriendEmail friendUid={message.senderId} />
           </Suspense>
         ) : (
-          user.email
+          user?.email
         )}
       </p>
     </div>
   );
 };
+
 export default MessageChat;

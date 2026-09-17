@@ -110,6 +110,9 @@ export const useAuthActions = () => {
     setLoading(true);
     try {
       await signOut(auth);
+
+      //Permite hacer reload para reiniciar los estados
+      window.location.href = "/auth/login";
     } catch (error) {
       console.error("Error during logout: ", error);
     } finally {

@@ -1,5 +1,5 @@
 import { useRoomActions } from "@/hooks/use-room-actions";
-import RoomChat from "./Roomchat";
+import RoomChat from "./RoomChat";
 
 interface Props {
   handleClickRoomId: (id: string) => void;
@@ -8,8 +8,16 @@ interface Props {
 const ListRoomChat = ({ handleClickRoomId }: Props) => {
   const { rooms } = useRoomActions();
 
+  if (!rooms?.length) {
+    return (
+      <p className="p-4 text-center text-sm text-muted-foreground">
+        No tienes conversaciones todavía
+      </p>
+    );
+  }
+
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       {rooms.map((room) => (
         <RoomChat
           key={room.id}
@@ -17,8 +25,8 @@ const ListRoomChat = ({ handleClickRoomId }: Props) => {
           handleClickRoomId={handleClickRoomId}
         />
       ))}
-      {/* <pre>{JSON.stringify(rooms, null, 2)}</pre> */}
     </div>
   );
 };
+
 export default ListRoomChat;
