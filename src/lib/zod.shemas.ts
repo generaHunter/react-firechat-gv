@@ -25,7 +25,17 @@ export const createTaskZodShema = z.object({
     description: z.string().max(500, "Description must be at most 500 characters long").optional()
 });
 
+export const messageZodSchema = z.object({
+    text: z.string().trim().min(1, "Escriba algo por favor")
+})
+
+export const searchFriendZodSchema = z.object({
+    email: z.string().trim().pipe(z.email("Invalid email format")),
+})
+
 export type LoginZodShemaType = z.infer<typeof loginZodShema>;
 export type RegisterZodShemaType = z.infer<typeof resgisterZodShema>;
 export type UpdateProfileZodShemaType = z.infer<typeof updatePrfileZodShema>;
 export type CreateTaskZodShemaType = z.infer<typeof createTaskZodShema>;
+export type MessageZodSchemaType = z.infer<typeof messageZodSchema>;
+export type SearchFriendSchemaType = z.infer<typeof searchFriendZodSchema>;

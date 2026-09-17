@@ -17,8 +17,7 @@ export const useTaskActions = () => {
 
   const tasksQuery = query(taskCollectionRef, where("userId", "==", user!.uid));
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { status, data: tasks } = useFirestoreCollectionData(tasksQuery, {
+  const { data: tasks } = useFirestoreCollectionData(tasksQuery, {
     idField: "id",
     suspense: true,
   });
